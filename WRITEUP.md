@@ -166,16 +166,6 @@ threads-ytdlp-extractor/downloads/DZLiOyeklke.mp4
 
 The downloaded file was about 17.26 MiB.
 
-## Upload
-
-After the extractor worked and the file downloaded successfully, the resulting MP4 was uploaded with:
-
-```powershell
-scp .\threads-ytdlp-extractor\downloads\DZLiOyeklke.mp4 user@arch-server.local:/srv/tempfiles/uploads/
-```
-
-The upload completed successfully.
-
 ## Current Limitations
 
 Threads is not a stable scrape target. Public pages may change shape, may omit media data, or may expose different Relay payloads depending on host, headers, region, login state, or post visibility.

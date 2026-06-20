@@ -1,30 +1,104 @@
-# yt-dlp Threads extractor plugin
+<p align="center">
+  <img src="assets/ascii-art-text.png" alt="Threads.com ASCII logo">
+</p>
 
-Standalone `yt-dlp` extractor plugin for Threads post URLs.
+# yt-dlp Threads Extractor Plugin
+
+Unofficial `yt-dlp` plugin for downloading media from public Threads posts.
+
+## Supported URLs
+
+```text
+https://www.threads.net/@username/post/SHORTCODE
+https://www.threads.com/@username/post/SHORTCODE
+https://www.threads.net/t/SHORTCODE
+```
+
+## Installation
+
+Install from GitHub:
+
+```powershell
+python -m pip install git+https://github.com/ThePotato456/threads-ytdlp-extractor.git
+```
+
+Use `python -m yt_dlp` from the same Python environment so yt-dlp can discover the installed plugin:
+
+```powershell
+python -m yt_dlp "https://www.threads.net/@username/post/SHORTCODE"
+```
+
+For local development:
+
+```powershell
+git clone https://github.com/ThePotato456/threads-ytdlp-extractor.git
+cd threads-ytdlp-extractor
+python -m pip install -e ".[test]"
+```
 
 ## Usage
 
-From this directory's parent:
+Download a post:
 
 ```powershell
-yt-dlp --plugin-dirs .\threads-ytdlp-extractor\plugins "https://www.threads.com/@dream.in.sanity/post/DZLiOyeklke"
+python -m yt_dlp "https://www.threads.net/@username/post/SHORTCODE"
 ```
 
-To use Meta's Threads Graph API when you have an access token:
+Preview the extracted result:
 
 ```powershell
-yt-dlp --plugin-dirs .\threads-ytdlp-extractor\plugins --extractor-args "threads:access_token=TOKEN" "https://www.threads.net/@username/post/SHORTCODE"
+python -m yt_dlp --simulate --print "%(extractor)s %(id)s %(ext)s" "https://www.threads.net/@username/post/SHORTCODE"
 ```
 
-or:
+Set an output path:
+
+```powershell
+python -m yt_dlp -o "downloads\%(id)s.%(ext)s" "https://www.threads.net/@username/post/SHORTCODE"
+```
+
+## Graph API Token
+
+The plugin can use the Threads Graph API when an access token is available.
+
+Pass the token with extractor arguments:
+
+```powershell
+python -m yt_dlp --extractor-args "threads:access_token=TOKEN" "https://www.threads.net/@username/post/SHORTCODE"
+```
+
+Or set an environment variable:
 
 ```powershell
 $env:THREADS_ACCESS_TOKEN = "TOKEN"
-yt-dlp --plugin-dirs .\threads-ytdlp-extractor\plugins "https://www.threads.net/@username/post/SHORTCODE"
+python -m yt_dlp "https://www.threads.net/@username/post/SHORTCODE"
 ```
 
-## Notes
+## Plugin Directory Mode
 
-Threads does not consistently expose post media in unauthenticated HTML. The extractor first tries public page data and direct media references. If that does not expose downloadable media, it uses the official Threads Graph API path when an access token is provided.
+You can also run the plugin without installing it:
 
-The Graph API accepts numeric thread IDs, while public URLs use shortcodes. This plugin converts shortcodes to numeric IDs using the same base64url alphabet used by Instagram/Threads media IDs.
+```powershell
+python -m yt_dlp --plugin-dirs .\plugins "https://www.threads.net/@username/post/SHORTCODE"
+```
+
+## Testing
+
+```powershell
+python -m pip install -e ".[test]"
+python -m pytest -q
+```
+
+## Requirements
+
+- Python 3.10 or newer
+- `yt-dlp`
+
+## Limitations
+
+- Only public, accessible Threads posts are supported.
+- Private, deleted, login-gated, or region-restricted posts may not work.
+- Threads page data can change without notice.
+
+## License
+
+MIT

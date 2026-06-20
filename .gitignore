@@ -2,3 +2,8 @@ __pycache__/
 *.pyc
 *.dump
 downloads/
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.agents/

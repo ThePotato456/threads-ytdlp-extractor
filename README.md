@@ -99,6 +99,12 @@ python -m pytest -q
 - Private, deleted, login-gated, or region-restricted posts may not work.
 - Threads page data can change without notice.
 
+## Uninstall
+
+```powershell
+python -m pip uninstall yt-dlp-threads-extractor
+```
+
 ## License
 
 MIT
